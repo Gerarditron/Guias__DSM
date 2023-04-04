@@ -13,9 +13,13 @@ class RegisterActivity : AppCompatActivity() {
 
     //Creamos la referencia del objeto de FirebaseAuth
     private lateinit var  auth: FirebaseAuth
+
     //Referencia a componentes de nuestro Layout
     private lateinit var buttonRegister: Button
     private lateinit var textViewLogin: TextView
+
+    //Escuchador de FirebaseAuth
+    private lateinit var  authStateListener: FirebaseAuth.AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,19 @@ class RegisterActivity : AppCompatActivity() {
             this.goToLogin()
         }
 
+        //Validar si existe un usuario activo
+        this.checkUser()
+
+    }
+
+    override fun onResume(){
+        super.onResume()
+        auth.addAuthStateListener(authStateListener)
+    }
+
+    override fun onPause(){
+        super.onPause()
+        auth.removeAuthStateListener(authStateListener)
     }
 
     private fun register(email: String, password: String){
@@ -49,6 +66,22 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(applicationContext,exception.localizedMessage,Toast.LENGTH_LONG).show()
         }
     }
+
+    private fun checkUser(){
+        //Verificacion del usuario
+        authStateListener = FirebaseAuth.AuthStateListener { auth ->
+            if (auth.currentUser != null){
+                //Cambiando la vista
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+
+            }
+
+        }
+
+    }
+
 
     private fun goToLogin(){
         val intent = Intent(this, LoginActivity::class.java)
