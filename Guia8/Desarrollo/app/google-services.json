@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "644176575277",
+    "firebase_url": "https://fir-dbrealtime-27ffe-default-rtdb.firebaseio.com",
+    "project_id": "fir-dbrealtime-27ffe",
+    "storage_bucket": "fir-dbrealtime-27ffe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644176575277:android:f2224b3f48bbd3a864b1a4",
+        "android_client_info": {
+          "package_name": "com.example.realtimedbkotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644176575277-3jjdfm4cmcmck44ivsd3q6bs07tfmrca.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRIPfp3OlBxRa6NPPawZ-tDLJ466KbeB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644176575277-3jjdfm4cmcmck44ivsd3q6bs07tfmrca.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
