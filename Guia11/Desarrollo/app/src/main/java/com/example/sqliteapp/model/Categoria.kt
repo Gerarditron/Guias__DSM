@@ -33,7 +33,7 @@ class Categoria (context: Context?) {
     }
 
     //ContentValues
-    fun generateContentvalues(
+    fun generarContentValues(
         nombre: String?
     ) : ContentValues? {
         val valores = ContentValues()
@@ -56,8 +56,53 @@ class Categoria (context: Context?) {
         )
 
         //Verificacion si existen registros precargados
+        val columns = arrayOf(COL_ID, COL_NOMBRE)
+        val cursor: Cursor? =
+            db!!.query(TABLE_NAME_CATEGORIA,columns,null,null,null,null,null)
+
+        //Validando que se ingresa la informacion solamente una vez, cuando se instala por primera vez la aplicacion
+        if (cursor == null || cursor!!.count <= 0){
+            //Registrando categorias por defecto
+            for(item in categories) {
+                db!!.insert(TABLE_NAME_CATEGORIA, null, generarContentValues(item))
+            }
+        }
+    }
+
+    fun showAllCategoria() : Cursor? {
+        val columns = arrayOf(COL_ID, COL_NOMBRE)
+        return db!!.query(
+            TABLE_NAME_CATEGORIA, columns,
+            null, null, null, null, "$COL_NOMBRE ASC"
+        )
+    }
+
+    //Debido a que el Spinner solamente guarda el nombre, esta funcion nos ayudara a recuperar el ID de la categoria
+    fun searchID(nombre: String): Int? {
+        val columns = arrayOf(COL_ID, COL_NOMBRE)
+        var cursor: Cursor? = db!!.query(
+            TABLE_NAME_CATEGORIA, columns,
+            "$COL_NOMBRE=?", arrayOf(nombre.toString()), null, null, null
+        )
+
+        cursor!!.moveToFirst()
+        return cursor!!.getInt(0)
+    }
+
+    fun searchNombre(id:Int):String? {
+        val columns = arrayOf(COL_ID, COL_NOMBRE)
+        var cursor: Cursor? = db!!.query(
+            TABLE_NAME_CATEGORIA, columns,
+            "$COL_ID=?", arrayOf(id.toString()),null,null,null
+        )
+
+        cursor!!.moveToFirst()
+        return cursor!!.getString(1)
 
     }
+
+
+
 
 
 }
