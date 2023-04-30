@@ -15,8 +15,10 @@ class HelperDB (context: Context?) :
         }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db.execSQL(Categoria.CREATE_TABLE_CATEGORIA)
-        db.execSQL(Productos.CREATE_TABLE_PRODUCTOS)
+        if (db != null) {
+            db.execSQL(Categoria.CREATE_TABLE_CATEGORIA)
+            db.execSQL(Productos.CREATE_TABLE_PRODUCTOS)
+        }
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) { }

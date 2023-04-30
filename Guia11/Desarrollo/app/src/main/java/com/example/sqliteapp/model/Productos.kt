@@ -30,10 +30,10 @@ class Productos (context: Context?) {
         //Sentencia SQL para crear la tabla
         val CREATE_TABLE_PRODUCTOS = (
                 "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_PRODUCTOS + "("
-                    + COL_ID + " integer primary key autoincrement,"
+                    + COL_ID + " integer primary key autoincrement, "
                     + COL_IDCATEGORIA + " integer NOT NULL,"
                     + COL_DESCRIPCION + " varchar(150) NOT NULL, "
-                    + COL_PRECIO + "decimal(10,2) NOT NULL, "
+                    + COL_PRECIO + " decimal(10,2) NOT NULL, "
                     + COL_CANTIDAD + " integer, "
                     + "FOREIGN KEY (idcategoria) REFERENCES categoria(idcategoria));"
                 )
@@ -55,7 +55,54 @@ class Productos (context: Context?) {
     }
 
     //Agregar un nuevo registro
-    ////-----------------------------------------------------------PAGINA 13 
+    fun addNewProducto(idcategoria: Int?, descripcion: String?, precio:Double?, cantidad: Int?){
+        db!!.insert(
+            TABLE_NAME_PRODUCTOS, null, generarContentValues(idcategoria, descripcion, precio, cantidad)
+        )
+    }
+
+    //Eliminar un registro
+    fun deleteProducto(id: Int){
+        db!!.delete(TABLE_NAME_PRODUCTOS, "$COL_ID=?", arrayOf(id.toString()))
+    }
+
+    //Modificar un registro
+    fun updateProducto(
+        id: Int,
+        idcategoria: Int?,
+        descripcion: String?,
+        precio: Double?,
+        cantidad: Int?
+    ) {
+        db!!.update(
+            TABLE_NAME_PRODUCTOS, generarContentValues(idcategoria, descripcion, precio, cantidad), "$COL_ID=?", arrayOf(id.toString())
+        )
+    }
+
+    //Mostrar un registro particular
+    fun searchProducto (id: Int): Cursor? {
+        val columns = arrayOf(COL_ID, COL_IDCATEGORIA, COL_DESCRIPCION, COL_PRECIO, COL_CANTIDAD)
+        return db!!.query(
+            TABLE_NAME_PRODUCTOS, columns, "$COL_ID=?", arrayOf(id.toString()),null,null,null
+        )
+    }
+
+    //Mostrar todos los registros
+    fun searchProductosAll(): Cursor? {
+        val columns = arrayOf(COL_ID, COL_IDCATEGORIA, COL_DESCRIPCION, COL_PRECIO, COL_CANTIDAD)
+        return db!!.query(
+            TABLE_NAME_PRODUCTOS, columns, null, null, null, null, "${Productos.COL_DESCRIPCION} ASC"
+        )
+    }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -10,25 +10,22 @@ class Categoria (context: Context?) {
 
     private var helper: HelperDB? = null
     private var db: SQLiteDatabase? = null
-
     init {
         helper = HelperDB(context)
         db = helper!!.getWritableDatabase()
     }
 
-    companion object{
+    companion object {
         //TABLA PRODUCTOS
         val TABLE_NAME_CATEGORIA = "categoria"
-
-        //Nombre de los campos de la tabla contactos
+        //nombre de los campos de la tabla contactos
         val COL_ID = "idcategoria"
         val COL_NOMBRE = "nombre"
-
-        //Sentencia SQL para crear la tabla
+        //sentencia SQL para crear la tabla
         val CREATE_TABLE_CATEGORIA = (
                 "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_CATEGORIA + "("
-                    + COL_ID + "integer primary key autoincrement, "
-                    + COL_NOMBRE + "varchar() NOT NULL);"
+                        + COL_ID + " integer primary key autoincrement,"
+                        + COL_NOMBRE + " varchar(50) NOT NULL);"
                 )
     }
 
