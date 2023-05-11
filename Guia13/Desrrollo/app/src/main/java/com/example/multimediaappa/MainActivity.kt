@@ -1,29 +1,50 @@
 package com.example.multimediaappa
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.multimediaappa.ui.theme.MultimediaappaTheme
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+    var menu = arrayOf(
+        "Audio",
+        "Video",
+        "Camara",
+        "TextToSpeech"
+    )
+    var activities = arrayOf(
+        "AudioActivity",
+        "VideoActivity",
+        "CamaraActivity",
+        "TextToSpeechActivity"
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-        
-
-
-
-
-
-
+        setContentView(R.layout.activity_main)
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1, menu
+        )
+        val listView: ListView = findViewById(R.id.listview_1)
+        listView.setAdapter(adapter)
+        listView.onItemClickListener = object : AdapterView.OnItemClickListener {
+            override fun onItemClick(
+                parent: AdapterView<*>, view: View,
+                position: Int, id: Long
+            ) {
+                var nombreClase = activities[position]
+                try {
+                    var activity =
+                        Class.forName("com.example.multimediaappa.$nombreClase")
+                    var numbersIntent = Intent(this@MainActivity, activity)
+                    startActivity(numbersIntent)
+                } catch (e: ClassNotFoundException) {
+                    e.printStackTrace()
+                }
+            }
+        }
     }
 }
-
